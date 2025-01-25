@@ -1,34 +1,31 @@
-# def divideANDconquer(lst):
-#     if len(lst) == 1:
-#         return lst[0]
-#     if not lst:
-#         return None
-    
-#     mid = len(lst) // 2
-#     left_max = divideANDconquer(lst[:mid])
-#     right_max = divideANDconquer(lst[mid:])
-    
-#     # Return the maximum of the two halves
-#     return max(left_max, right_max)
-    
-# # Example usage
-# numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
-# print(divideANDconquer(numbers))  # Output: 9
+# knapsack problem
+#w =50
+# wt= [10,20,30]
+# val = [60,100,120]
+
+# n= len(val)
+
+# memo ={}
 
 
-def MergeSort(lst):
-    if len(lst) == 1:
-        return lst
-    if not lst:
-        return []
+def knapsack(W, wt, val, n=None, memo=None):
+    if n == None:
+        n = len(val)
+    if memo ==  None:
+        memo = {}
+        
+    if  n==0:
+        return 0
+    if (n,W) in memo:
+        return memo[(n,W)]
     
-    mid = len(lst) // 2
-    low = MergeSort(lst[:mid])
-    high = MergeSort(lst[mid:])
+    if wt[n-1]<=W:
+        yes = val[n-1] + knapsack(W-wt[n-1], wt, val,n-1,memo)
+        no = knapsack(W, wt, val, n-1,memo)
+        memo[(n,W)] = max(yes,no)
+        return memo[(n,W)]
     
-
-    return sorted(low + high)
-    
-# Example usage
-numbers = [5,4,3,2,1]
-print(MergeSort(numbers))  # Output: [1,2,3,4,5]
+    if wt[n-1]> W:
+        memo[(n,W)] = knapsack(W-wt[n-1], wt, val,n-1,memo)
+        return memo[(n,W)]
+print(knapsack(50 , [10,20,30] , [60,100,120]))
