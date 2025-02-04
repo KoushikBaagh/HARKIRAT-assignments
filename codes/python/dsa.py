@@ -1,31 +1,22 @@
-# knapsack problem
-#w =50
-# wt= [10,20,30]
-# val = [60,100,120]
+# Output :- 3
 
-# n= len(val)
-
-# memo ={}
-
-
-def knapsack(W, wt, val, n=None, memo=None):
-    if n == None:
-        n = len(val)
-    if memo ==  None:
-        memo = {}
-        
-    if  n==0:
-        return 0
-    if (n,W) in memo:
-        return memo[(n,W)]
+def subset(arr, sum):
+    n = len(arr)
+    t = [[0 for _ in range(sum + 1)] for _ in range(n + 1)]
     
-    if wt[n-1]<=W:
-        yes = val[n-1] + knapsack(W-wt[n-1], wt, val,n-1,memo)
-        no = knapsack(W, wt, val, n-1,memo)
-        memo[(n,W)] = max(yes,no)
-        return memo[(n,W)]
+    for i in range(n + 1):
+        for j in range(sum + 1):
+            if i == 0:
+                t[i][j] = 0
+            if j == 0:
+                t[i][j] = 1
+            if i > 0 and arr[i - 1] <= j:
+                t[i][j] = t[i - 1][j] + t[i - 1][j - arr[i - 1]]
+            elif i > 0:
+                t[i][j] = t[i - 1][j]
     
-    if wt[n-1]> W:
-        memo[(n,W)] = knapsack(W-wt[n-1], wt, val,n-1,memo)
-        return memo[(n,W)]
-print(knapsack(50 , [10,20,30] , [60,100,120]))
+    return t[n][sum]
+
+arr = [2, 3, 5, 6, 8, 10]
+result = subset(arr, 10)
+print(result)
