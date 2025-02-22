@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f8ff; /* Soothing background color */
+  font-family: "Arial", sans-serif;
+  color: #333;
+  width: 100%; /* Take up full width */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 100%; /* Header spans the full width */
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  width: 100%; /* Main content spans the full width */
+}
+
+.heroSection {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: 90%; /* Add some margin on the sides for readability */
+  max-width: 1200px; /* Optional: set a large max-width if you still want to limit on very large screens */
+  margin: 0 auto; /* Center the content */
+  text-align: center; /* Default to center for smaller screens */
+}
+
+.heroImage {
+  flex-shrink: 0;
+}
+
+.footer {
+  background-color: #e9ecef;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+  width: 100%; /* Footer spans the full width */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .heroSection {
+    flex-direction: column-reverse;
+    text-align: center;
+    width: 95%; /* Adjust margin for smaller screens */
+  }
+
+  .heroImage {
+    width: 80%;
+    max-width: 300px;
+  }
+}

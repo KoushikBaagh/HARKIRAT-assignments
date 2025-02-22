@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="margin: 0; padding: 0">
+    <!-- Your content here -->
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        height: 100vh;
+        width: 100%;
+      "
+    >
+      <div
+        class="main-container"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 750px;
+          width: 1600px;
+          background: #ffffff;
+        "
+      >
+        hi there
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 200px;
+            width: 50%;
+            height: 70px;
+            background-color: rgb(153, 151, 151);
+            border-radius: 15px 50px;
+            padding: 20px;
+          "
+        >
+          <button
+            style="display: flex; background-color: red; margin-right: 10px"
+            onclick="document.querySelector('.main-container').style.backgroundColor ='red'"
+          >
+            RED
+          </button>
+          <button
+            style="display: flex; background-color: yellow; margin-right: 10px"
+            onclick="document.querySelector('.main-container').style.backgroundColor = 'yellow'"
+          >
+            YELLOW
+          </button>
+          <button
+            style="
+              display: flex;
+              background-color: black;
+              color: #ffffff;
+              margin-right: 10px;
+            "
+            onclick="document.querySelector('.main-container').style.backgroundColor = 'black'"
+          >
+            BLACK
+          </button>
+          <button
+            style="display: flex; background-color: purple; margin-right: 10px"
+            onclick="document.querySelector('.main-container').style.backgroundColor = 'purple'"
+          >
+            PURPLE
+          </button>
+          <button
+            style="display: flex; background-color: green; margin-right: 10px"
+            onclick="document.querySelector('.main-container').style.backgroundColor = 'green'"
+          >
+            GREEN
+          </button>
+          <button
+            style="display: flex; background-color: blue; margin-right: 10px"
+            onclick="document.querySelector('.main-container').style.backgroundColor = 'blue'"
+          >
+            BLUE
+          </button>
+          <button
+            style="display: flex; background-color: white"
+            onclick="document.querySelector('.main-container').style.backgroundColor = 'white'"
+          >
+            Default
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="bg-color-changer.js"></script>
+  </body>
+</html>
