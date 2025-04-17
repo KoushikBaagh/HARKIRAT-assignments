@@ -19,7 +19,7 @@ function button() {
       deleteTodo(listItem.id);
     };
     listItem.appendChild(delBtn);
-    delBtn.appendChild(document.createTextNode("Delete"));
+    delBtn.appendChild(document.createTextNode("Delete")); // add text inside delete button
     newList.appendChild(listItem);
     listItem.id = "todo-" + i;
     // console.log(listItem.id);
@@ -34,17 +34,21 @@ function button() {
 }
 
 /*************************************** */
-
-// function button() {
-//   let text = document.getElementById("inp").value;
-
-//   if (text != null) {
-//     let node = document.getElementById("todoList");
-//     const listItem = document.createElement("li");
-//     let delbutton = document.createElement("BUTTON");
-//     let textnode = document.createTextNode("Delete");
-//     // appending text to button
-//     delbutton.append(textnode);
-//     node.append(text + "  " + delbutton);
-//   }
-// }
+/////////////////////////////// Another Method
+// script = "";
+// const button = () => {
+//   const text = document.getElementById(".input").value;
+//   // Create delete button
+//   const deleteButton = document.createElement("button");
+//   deleteButton.innerText = "Delete";
+//   let newLI = document.createElement("li");
+//   newLI.innerText = text;
+//   document.getElementById(".ul").appendChild(newLI);
+//   newLI.appendChild(document.createTextNode("  "));
+//   newLI.appendChild(deleteButton);
+//   document.getElementById(".input").value = "";
+//   const deleteTodo = () => {
+//     newLI.remove();
+//   };
+//   deleteButton.onclick = deleteTodo;
+// };
