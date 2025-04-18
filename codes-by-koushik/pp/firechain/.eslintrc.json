@@ -1,0 +1,9 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "react/jsx-filename-extension": 0,
+    "no-multi-spaces": 0,
+    "key-spacing": 0
+  },
+  "parser": "babel-eslint"
+}
