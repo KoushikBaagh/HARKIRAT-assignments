@@ -1,45 +1,42 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import App from './app';
-
-const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
-);
-
-  Router,
-  browserHistory,
-} from 'react-router';
-
-import App from './app';
 import {
-  HomeView,
-} from '../components/views';
-import React from 'react';
-import {render}             from 'react-dom';
+  Route,
+  BrowserRouter as Router, // Changed from Router
+  Routes, // Added import for v6 structure
+} from "react-router-dom"; // Changed from 'react-router'
+
+import App from "./app";
+import { HomeView } from "../components/views";
+import React from "react";
+import { createRoot } from "react-dom/client"; // Import createRoot
 
 function run() {
-  render(
-    (
-    <Router history={browserHistory}>
-      <Route component={App}>
-        <Route path="/" component={HomeView} />
-      </Route>
+  const container = document.getElementById("app");
+  const root = createRoot(container); // Create a root.
+  root.render(
+    // Render using the root.
+    <Router>
+      {" "}
+      {/* Use BrowserRouter */}
+      <Routes>
+        {" "}
+        {/* Use Routes wrapper */}
+        <Route
+          path="/"
+          element={
+            <App>
+              <HomeView />
+            </App>
+          }
+        />{" "}
+        {/* Structure for v6 routes */}
+      </Routes>
     </Router>
-    ),
-    document.getElementById('app')
   );
 }
 
-const loadedStates = ['complete', 'loaded', 'interactive'];
+const loadedStates = ["complete", "loaded", "interactive"];
 if (loadedStates.includes(document.readyState) && document.body) {
   run();
 } else {
-  window.addEventListener('DOMContentLoaded', run, false);
+  window.addEventListener("DOMContentLoaded", run, false);
 }

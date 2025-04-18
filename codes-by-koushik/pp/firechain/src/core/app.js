@@ -1,33 +1,18 @@
-import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Container, Button, Box } from '@mui/material';
-import Dashboard from '../components/views/Dashboard';
-import AddWallet from '../components/views/AddWallet';
+import React from "react";
+// Removed unused styles import
+import { CssBaseline } from "@mui/material"; // Keep CssBaseline if applying globally here - Decided against global here, handled in HomeView
 
-import radium from 'radium';
-import styles from './styles/app.js';
-
-function App() {
-  return (
-    <>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Firechain
-          </Typography>
-          <Button color="inherit" component={Link} to="/">Dashboard</Button>
-          <Button color="inherit" component={Link} to="/add">Add Wallet</Button>
-        </Toolbar>
-      </AppBar>
-      <Container sx={{ mt: 4 }}>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/add" element={<AddWallet />} />
-        </Routes>
-      </Container>
-    </>
-  );
+class App extends React.Component {
+  render() {
+    console.log("app loaded");
+    return (
+      <React.Fragment>
+        {/* CssBaseline removed, handled within HomeView's ThemeProvider */}
+        {/* Removed the outer div */}
+        {this.props.children}
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
-

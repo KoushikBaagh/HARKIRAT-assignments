@@ -1,35 +1,55 @@
-var HtmlWebpackPlugin =  require('html-webpack-plugin');
-var webpack = require('webpack');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    './src/core/index.js',
-  ],
+  entry: "./src/core/index.js",
   output: {
-    path: './dist/',
-    filename: 'index.bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.[contenthash].js",
+    publicPath: "/",
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react', 'stage-0'],
+        use: "ts-loader",
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "@babel/preset-typescript",
+            ],
+          },
         },
-        progress: true,
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Firechain',
-      template: './src/core/index.html',
+      template: "./src/core/index.html",
     }),
-    new webpack.HotModuleReplacementPlugin()
   ],
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    port: 3000,
+  },
 };

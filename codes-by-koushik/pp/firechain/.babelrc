@@ -1,4 +1,8 @@
+// This file might be causing conflicts with the Babel configuration in webpack.config.js.
+// The necessary presets (@babel/preset-env, @babel/preset-react, @babel/preset-typescript)
+// are already configured in webpack.config.js.
+// Consider removing this file if build errors persist.
 {
-  "presets": ["es2015", "react", "airbnb"],
-  "plugins": ["react-hot-loader/babel"]
+  // "presets": ["es2015", "react", "airbnb"]
+  // "plugins": ["react-hot-loader/babel"] // Removed outdated plugin
 }

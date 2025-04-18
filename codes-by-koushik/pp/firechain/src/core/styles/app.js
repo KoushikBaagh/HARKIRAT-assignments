@@ -1,11 +1,1 @@
-export default {
-  base: {
-    width: '100%',
-    height: '100vh',
-    backgroundColor: '#f5f5f5',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-};
+// This file can likely be removed as styles are now handled by MUI theme and sx props.

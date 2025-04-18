@@ -1,4 +1,5 @@
-import Dashboard from './Dashboard';
-import AddWallet from './AddWallet';
+import HomeView from './HomeView';
 
-export { Dashboard, AddWallet };
+export {
+  HomeView,
+};

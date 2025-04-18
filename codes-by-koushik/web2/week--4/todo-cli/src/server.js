@@ -1,73 +1,3 @@
-// import express from "express";
-// import fs from "fs";
-// import path from "path";
-// import todos from "../todos.json";
-// const app = express();
-// const filePath = path.join(__dirname, "..", "todos.json");
-// app.use(express.json());
-
-// app.post("/create-todo", (req, res) => {
-//   todos.push(req.body);
-//   fs.writeFile(filePath, JSON.stringify(todos), (err) => {
-//     if (err) throw err;
-//   });
-//   res.send("Todo printed in todos.json");
-// });
-
-// app.put("/update-todo/:id", (req, res) => {
-//   const id = Number(req.params.id);
-//   fs.readFile(filePath, (err, data) => {
-//     if (err != null) res.status(500);
-//     const contentArray = JSON.parse(data.toString());
-//     const index = contentArray.findIndex((todo: any) => todo.id == id);
-//     if (index === -1) {
-//       res.status(404);
-//       return;
-//     }
-//     contentArray[index].task = req.body.task;
-//     contentArray[index].done = req.body.done;
-//     fs.writeFile(filePath, JSON.stringify(contentArray), (err) => {
-//       if (err) res.status(500);
-//       else res.send("Successfully wrote to todos.json");
-//     });
-//   });
-
-//   // console.log(is_Found);
-// });
-
-// app.delete("/delete-todo/:id", (req, res) => {
-//   const id = Number(req.params.id);
-//   // console.log(id);
-//   fs.readFile(filePath, (err, data) => {
-//     if (err != null) {
-//       res.status(500);
-//     }
-//     const contentArray = JSON.parse(data.toString());
-//     // console.log("Original todos array:", contentArray);
-//     // const updatedContentArray = delete contentArray[id - 1]; // using delete() method. But delet() returns NULL
-//     const updatedContentArray = contentArray.filter(
-//       (todos: any) => todos.id != id
-//     );
-//     // console.log("Updated todos array:", updatedContentArray);
-//     fs.writeFile(filePath, JSON.stringify(updatedContentArray), (err) => {
-//       if (err) res.status(500);
-//       else res.send("Successfully wrote to todos.json");
-//     });
-//   });
-// });
-
-// app.get("/get-todo", (req, res) => {
-//   fs.readFile(filePath, (err, data) => {
-//     if (err) throw err;
-//     const contentArray = JSON.parse(data.toString());
-//     res.send(contentArray);
-//   });
-// });
-
-// app.listen(3000, () => {
-//   console.log("Sever listening Koushik");
-// });
-/**************************************************************************/
 import express from "express";
 import fs from "fs/promises";
 import path from "path";
@@ -143,4 +73,26 @@ app.put("/delete-todo", async (req, res) => {
   }
 });
 
-app.listen(3000);
+app.put("/update-todo/:id", async (req, res) => {
+  try {
+    const data = await readFile();
+    const idToUpdate = parseInt(req.params.id);
+    const is_present = data.findIndex((todo) => todo.id == idToUpdate);
+    if (is_present == -1) {
+      // If todo with the given id is not found
+      return res.send("Todo not found");
+    } else {
+      const todos = data.filter((todos) => todos.id != idToUpdate);
+      todos.push(req.body);
+      function comparefn(a, b) {
+        return a.id - b.id;
+      }
+      todos.sort(comparefn);
+      await writeFile(todos);
+      res.send("Todo updated successfully");
+    }
+  } catch (err) {
+    res.send("Error! Cannot update todos");
+  }
+});
+app.listen(4000);
