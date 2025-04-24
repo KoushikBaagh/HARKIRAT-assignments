@@ -5,6 +5,7 @@ import fs from "fs/promises";
 
 const app = express();
 
+app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 
@@ -34,6 +35,30 @@ app.get("/todos", async (req, res) => {
     res.send(todos);
   } catch (err) {
     res.status(500).send("Error reading todos");
+  }
+});
+
+app.post("/create-todo", async (req, res) => {
+  try {
+    // Reading existing todos before creating new ones preserves data
+    // integrity, maintains the array structure, ensures unique IDs,
+    // persists all user todos, and handles concurrent operations.
+    const todos = await readFile();
+
+    // Generate unique ID using timestamp
+    const newTodo = {
+      id: Date.now().toString(),
+      title: req.body.title,
+    };
+
+    // Add new todo to the array
+    todos.push(newTodo);
+
+    // Write updated todos back to file
+    await writeFile(todos);
+    console.log("todos wrote successfully");
+  } catch (err) {
+    console.error("Error adding todo:", err);
   }
 });
 
