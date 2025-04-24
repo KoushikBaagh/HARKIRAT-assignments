@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import fs from "fs/promises";
 
 const app = express();
 
@@ -12,7 +13,7 @@ const filepath = path.join(_dirname, "/todos.json");
 
 async function readFile() {
   try {
-    const data = await fs.readfile(filepath, "utf-8");
+    const data = await fs.readFile(filepath, "utf-8");
     const todos = JSON.parse(data);
     return todos;
   } catch (err) {
