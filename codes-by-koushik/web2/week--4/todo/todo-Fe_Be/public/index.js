@@ -25,7 +25,7 @@ API_URL = "http://localhost:4000/";
 function submit_todo() {
   const text = document.getElementById("inp").value;
 
-  if (!text.trim()) {
+  if (text === "") {
     alert("Please enter a todo item");
     return;
   }
