@@ -57,8 +57,14 @@ app.post("/create-todo", async (req, res) => {
     // Write updated todos back to file
     await writeFile(todos);
     console.log("todos wrote successfully");
+
+    // IMPORTANT: Sending a response is critical in HTTP communication -
+    // without this line, the client will time out and show an error even
+    // though the todo was saved successfully!
+    res.status(200).send({ success: true });
   } catch (err) {
     console.error("Error adding todo:", err);
+    res.status(500).send({ success: false });
   }
 });
 
