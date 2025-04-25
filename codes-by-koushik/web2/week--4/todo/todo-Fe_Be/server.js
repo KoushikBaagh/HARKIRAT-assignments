@@ -40,7 +40,7 @@ app.get("/todos", async (req, res) => {
 
 app.post("/create-todo", async (req, res) => {
   try {
-    // Reading existing todos before creating new ones preserves data
+    // IMPORTANT: Reading existing todos before creating new ones preserves data
     // integrity, maintains the array structure, ensures unique IDs,
     // persists all user todos, and handles concurrent operations.
     const todos = await readFile();
@@ -57,13 +57,26 @@ app.post("/create-todo", async (req, res) => {
     // Write updated todos back to file
     await writeFile(todos);
     console.log("todos wrote successfully");
-
-    // IMPORTANT: Sending a response is critical in HTTP communication -
+    // Respond with the newly created todo object so the client can access its
+    // id. IMPORTANT: Sending a response is critical in HTTP communication -
     // without this line, the client will time out and show an error even
     // though the todo was saved successfully!
-    res.status(200).send({ success: true });
+    res.status(200).send(newTodo);
   } catch (err) {
     console.error("Error adding todo:", err);
+    res.status(500).send({ success: false });
+  }
+});
+
+app.delete("/delete-todo/:id", async (req, res) => {
+  try {
+    const data = await readFile();
+    // Filter out the todo with matching id
+    const todos = data.filter((todo) => todo.id != req.params.id);
+    await writeFile(todos);
+    res.status(200).send({ success: true });
+  } catch (err) {
+    console.error("Error deleting todo:", err);
     res.status(500).send({ success: false });
   }
 });

@@ -55,10 +55,10 @@ app.post("/create-todo", async (req, res) => {
   }
 });
 
-app.put("/delete-todo", async (req, res) => {
+app.delete("/delete-todo/:id", async (req, res) => {
   try {
     const data = await readFile();
-    const idToDelete = req.body.id;
+    const idToDelete = req.params.id;
     // Find if the todo exists
     const is_present = data.findIndex((todos) => todos.id == idToDelete);
     if (is_present == -1) {

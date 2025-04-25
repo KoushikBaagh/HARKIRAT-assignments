@@ -1,17 +1,18 @@
+const API_URL = "http://localhost:4000/";
 document.addEventListener("DOMContentLoaded", () => {
   axios
-    .get("/todos")
+    .get(API_URL + "todos")
     .then((response) => {
       const todos = response.data;
       todos.forEach((element) => {
         const newItem = document.createElement("li");
         newItem.textContent = element.title;
         const newButton = document.createElement("button");
-        newButton.innerHTML = "Delete Todo";
+        newButton.textContent = "Delete Todo";
         document.getElementById("ol").appendChild(newItem);
         newItem.appendChild(newButton);
         newButton.onclick = () => {
-          document.getElementById("ol").removeChild(newItem);
+          deleteTodo(element.id, newItem);
         };
       });
     })
@@ -20,7 +21,25 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(error);
     });
 });
-API_URL = "http://localhost:4000/";
+
+// Reusable function to delete a todo
+function deleteTodo(todoId, listItem) {
+  axios
+    .delete(API_URL + "delete-todo/" + todoId)
+    .then((response) => {
+      if (response.data.success) {
+        document.getElementById("ol").removeChild(listItem);
+      } else {
+        alert("Failed to delete todo from server");
+      }
+    })
+    .catch((error) => {
+      console.error("Error deleting todo:", error);
+      alert(
+        "Failed to delete todo. Please check the server connection and logs."
+      );
+    });
+}
 
 function submit_todo() {
   const text = document.getElementById("inp").value;
@@ -39,11 +58,13 @@ function submit_todo() {
       const newButton = document.createElement("button");
       newButton.innerHTML = "Delete Todo";
       newItem.appendChild(newButton);
-      document.getElementById("ol").appendChild(newItem);
       document.getElementById("inp").value = "";
-      // This onclickk is wrong
+
+      // Store the todo id from the server response
+      const todoId = response.data.id;
+      // Use the deleteTodo function for new items too
       newButton.onclick = () => {
-        document.getElementById("ol").removeChild(newItem);
+        deleteTodo(todoId, newItem);
       };
     })
     .catch((error) => {
