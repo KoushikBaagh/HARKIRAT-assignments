@@ -8,28 +8,40 @@ const rooms = new Map();
  PAYLOAD STRUCTURE :
 {
 "type" : "join/chat_message",
-"roomCode" : "babaji ka thullu"
-"text" : "Hi hkirat"
+"roomCode" : "babaji ka thullu",
+"text" : "Hi hkirat",
+"senderName" : "John Doe"
 }
 */
 
 wss.on("connection", (socket) => {
   console.log("User Connected By Koushik");
   socket.on("message", (data) => {
-    const client_json = JSON.parse(data.toString());
-    if (client_json.type === "join") {
-      const roomCode = client_json.roomCode;
-      if (!rooms.has(roomCode)) {
-        rooms.set(roomCode, new Set());
-      }
-      rooms.get(roomCode).add(socket);
-      socket.currentRoom = roomCode;
-    } else if (client_json.type === "chat_message" && socket.currentRoom) {
-      rooms.get(socket.currentRoom).forEach((client) => {
-        if (client !== socket) {
-          client.send(client_json.text);
+    try {
+      const client_json = JSON.parse(data.toString());
+      if (client_json.type === "join") {
+        const roomCode = client_json.roomCode;
+        const senderName = client_json.senderName || "Anonymous";
+        if (!rooms.has(roomCode)) {
+          rooms.set(roomCode, new Set());
         }
-      });
+        rooms.get(roomCode).add(socket);
+        socket.currentRoom = roomCode;
+        socket.senderName = senderName;
+      } else if (client_json.type === "chat_message" && socket.currentRoom) {
+        const messageWithSender = {
+          text: client_json.text,
+          senderName: socket.senderName || "Anonymous",
+          timestamp: new Date().toISOString(),
+        };
+        rooms.get(socket.currentRoom).forEach((client) => {
+          if (client !== socket) {
+            client.send(JSON.stringify(messageWithSender));
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   });
   socket.on("close", () => {
