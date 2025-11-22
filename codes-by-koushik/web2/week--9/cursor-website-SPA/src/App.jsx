@@ -1,13 +1,17 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import TopNav from "./components/TopNav";
+import HomePage from "./components/HomePage";
+import Footer from "./components/Footer";
+import "./index.css";
 
 function App() {
-
   return (
     <>
-    Hi there
+      <TopNav />
+      <HomePage />
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
